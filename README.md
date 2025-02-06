@@ -1,6 +1,6 @@
 # 🏥 Gestionnaire de Stock Médical  
 
-Une application de bureau développée en **C** avec **GTK** pour la gestion de stock de médicaments et de fournisseurs pharmaceutiques.  
+Une application développée en **C** avec **GTK** pour la gestion de stock de médicaments et de fournisseurs pharmaceutiques.  
 
 ## ✨ Fonctionnalités  
 
