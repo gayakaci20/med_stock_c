@@ -1,6 +1,3 @@
-Here's a relevant description in French for your GitHub repository:
-
-```markdown:/Users/gayakaci/Documents/NEW C/README.md
 # Gestionnaire de Stock Médical
 
 Une application de bureau développée en C avec GTK pour la gestion de stock de médicaments et de fournisseurs pharmaceutiques.
