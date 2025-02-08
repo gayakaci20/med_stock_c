@@ -1,9 +1,9 @@
 #include "../include/database.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>  // Add this line for strcat
+#include <string.h>  
 
-sqlite3 *db = NULL;  // Define the database connection variable
+sqlite3 *db = NULL;  
 
 void executerRequeteSQL(const char *requete) {
     char *messageErreur = NULL;
@@ -19,7 +19,6 @@ void db_init(void) {
         exit(1);
     }
     
-    // Create tables (your existing table creation code)
     const char *tables[] = {
         "CREATE TABLE IF NOT EXISTS Medicaments ("
         "id INTEGER PRIMARY KEY AUTOINCREMENT, "

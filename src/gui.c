@@ -110,7 +110,7 @@ void refresh_medication_list(void) {
                              0, sqlite3_column_int(stmt, 0),
                              1, sqlite3_column_text(stmt, 1),
                              2, sqlite3_column_int(stmt, 2),
-                             3, atof(price_str),  // Utilise la chaîne formatée
+                             3, atof(price_str),  
                              4, sqlite3_column_text(stmt, 4),
                              -1);
         }
@@ -173,7 +173,6 @@ void create_main_window(void) {
     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), btn_search, -1);
     g_signal_connect(btn_search, "clicked", G_CALLBACK(show_advanced_search_dialog), main_window);
 
-    // Ajout des nouveaux boutons
     GtkToolItem *separator3 = gtk_separator_tool_item_new();
     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), separator3, -1);
 
@@ -181,11 +180,9 @@ void create_main_window(void) {
     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), btn_generate, -1);
     g_signal_connect(btn_generate, "clicked", G_CALLBACK(show_generate_dialog), main_window);
 
-    // Création du notebook (onglets)
     notebook = gtk_notebook_new();
     gtk_box_pack_start(GTK_BOX(main_box), notebook, TRUE, TRUE, 0);
 
-    // Create medication page
     GtkWidget *med_page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     medication_list = gtk_tree_view_new();
     setup_medication_list();  
@@ -193,7 +190,6 @@ void create_main_window(void) {
     gtk_container_add(GTK_CONTAINER(med_scroll), medication_list);
     gtk_box_pack_start(GTK_BOX(med_page), med_scroll, TRUE, TRUE, 0);
 
-    // Create medication buttons
     GtkWidget *med_button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
     gtk_box_pack_start(GTK_BOX(med_page), med_button_box, FALSE, FALSE, 5);
 
@@ -205,7 +201,6 @@ void create_main_window(void) {
     g_signal_connect(edit_med_button, "clicked", G_CALLBACK(show_edit_medication_dialog), main_window);
     g_signal_connect(delete_med_button, "clicked", G_CALLBACK(delete_selected_medication), NULL);
 
-    // Create supplier page
     GtkWidget *sup_page = gtk_box_new(GTK_ORIENTATION_VERTICAL, 5);
     supplier_list = gtk_tree_view_new();
     setup_supplier_list();  
@@ -213,7 +208,6 @@ void create_main_window(void) {
     gtk_container_add(GTK_CONTAINER(sup_scroll), supplier_list);
     gtk_box_pack_start(GTK_BOX(sup_page), sup_scroll, TRUE, TRUE, 0);
 
-    // Create supplier buttons
     GtkWidget *sup_button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
     gtk_box_pack_start(GTK_BOX(sup_page), sup_button_box, FALSE, FALSE, 5);
 
@@ -225,15 +219,12 @@ void create_main_window(void) {
     g_signal_connect(edit_sup_button, "clicked", G_CALLBACK(show_edit_supplier_dialog), main_window);
     g_signal_connect(delete_sup_button, "clicked", G_CALLBACK(delete_selected_supplier), NULL);
 
-    // Add pages to notebook
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), med_page, gtk_label_new("Médicaments"));
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), sup_page, gtk_label_new("Fournisseurs"));
 
-    // Connect right-click events
     g_signal_connect(medication_list, "button-press-event", G_CALLBACK(on_button_pressed), GINT_TO_POINTER(0));
     g_signal_connect(supplier_list, "button-press-event", G_CALLBACK(on_button_pressed), GINT_TO_POINTER(1));
 
-    // Refresh lists
     refresh_medication_list();
     refresh_supplier_list();
 
@@ -568,7 +559,6 @@ void delete_selected_supplier(GtkWidget *button, gpointer user_data) {
         gtk_widget_destroy(dialog);
     }
 }
-// Add these functions before the last closing brace
 
 void refresh_supplier_list(void) {
     sqlite3_stmt *stmt;
@@ -597,7 +587,7 @@ void perform_simple_search(GtkWidget *button, GtkWidget *search_entry) {
     const char *search_term = gtk_entry_get_text(GTK_ENTRY(search_entry));
     int current_page = gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook));
     
-    if (current_page == 0) {  // Medications page
+    if (current_page == 0) { 
         char query[512];
         snprintf(query, sizeof(query),
                 "SELECT * FROM Medicaments WHERE nom LIKE '%%%s%%';",
@@ -620,7 +610,7 @@ void perform_simple_search(GtkWidget *button, GtkWidget *search_entry) {
             }
             sqlite3_finalize(stmt);
         }
-    } else {  // Suppliers page
+    } else {  
         char query[512];
         snprintf(query, sizeof(query),
                 "SELECT * FROM Fournisseurs WHERE nom LIKE '%%%s%%';",
@@ -732,7 +722,6 @@ void show_advanced_search_dialog(GtkWidget *parent) {
     GtkWidget *notebook = gtk_notebook_new();
     gtk_container_add(GTK_CONTAINER(content_area), notebook);
 
-    // Medications search page
     GtkWidget *med_grid = gtk_grid_new();
     gtk_grid_set_row_spacing(GTK_GRID(med_grid), 5);
     gtk_grid_set_column_spacing(GTK_GRID(med_grid), 5);
@@ -771,7 +760,6 @@ void show_advanced_search_dialog(GtkWidget *parent) {
     gtk_notebook_append_page(GTK_NOTEBOOK(notebook), med_grid, 
                            gtk_label_new("Medications"));
 
-    // Suppliers search page
     GtkWidget *sup_grid = gtk_grid_new();
     gtk_grid_set_row_spacing(GTK_GRID(sup_grid), 5);
     gtk_grid_set_column_spacing(GTK_GRID(sup_grid), 5);
@@ -799,7 +787,7 @@ void show_advanced_search_dialog(GtkWidget *parent) {
     if (gtk_dialog_run(GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT) {
         int current_page = gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook));
         
-        if (current_page == 0) {  // Medications
+        if (current_page == 0) {  
             char query[1024];
             snprintf(query, sizeof(query),
                     "SELECT * FROM Medicaments WHERE nom LIKE '%%%s%%'",
@@ -869,7 +857,7 @@ void show_advanced_search_dialog(GtkWidget *parent) {
     }
 }
 static gboolean on_button_pressed(GtkWidget *treeview, GdkEventButton *event, gpointer user_data) {
-    if (event->type == GDK_BUTTON_PRESS && event->button == 3) { // Right click
+    if (event->type == GDK_BUTTON_PRESS && event->button == 3) {
         GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(treeview));
         GtkTreePath *path;
         
@@ -925,7 +913,7 @@ void show_generate_dialog(GtkWidget *button, gpointer user_data) {
         int type = gtk_combo_box_get_active(GTK_COMBO_BOX(type_combo));
         int count = atoi(gtk_entry_get_text(GTK_ENTRY(count_entry)));
 
-        if (type == 0) {  // Médicaments
+        if (type == 0) {  
             GeneratedMedication *medications = malloc(count * sizeof(GeneratedMedication));
             if (generate_medications(medications, count)) {
                 for (int i = 0; i < count; i++) {
@@ -937,7 +925,7 @@ void show_generate_dialog(GtkWidget *button, gpointer user_data) {
                 refresh_medication_list();
             }
             free(medications);
-        } else {  // Fournisseurs
+        } else { 
             GeneratedSupplier *suppliers = malloc(count * sizeof(GeneratedSupplier));
             if (generate_suppliers(suppliers, count)) {
                 for (int i = 0; i < count; i++) {

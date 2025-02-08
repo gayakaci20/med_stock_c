@@ -44,7 +44,6 @@ typedef struct {
 void advanced_search_medications(const MedicationSearchCriteria* criteria);
 void advanced_search_suppliers(const SupplierSearchCriteria* criteria);
 
-// Add after the existing includes
 typedef struct {
     char name[256];
     int quantity;
@@ -58,7 +57,6 @@ typedef struct {
     char address[512];
 } GeneratedSupplier;
 
-// Add these function declarations before the #endif
 int generate_medications(GeneratedMedication *medications, int count);
 int generate_suppliers(GeneratedSupplier *suppliers, int count);
 

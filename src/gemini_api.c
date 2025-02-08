@@ -70,8 +70,8 @@ int generate_medications(GeneratedMedication *medications, int count) {
         int med_index = rand() % (sizeof(MEDICATIONS) / sizeof(MEDICATIONS[0]));
         strncpy(medications[i].name, MEDICATIONS[med_index], sizeof(medications[i].name) - 1);
         
-        medications[i].quantity = 50 + (rand() % 451); // 50-500
-        medications[i].price = 3.50 + ((rand() % 2150) / 100.0); // 3.50-25.00
+        medications[i].quantity = 50 + (rand() % 451); 
+        medications[i].price = 3.50 + ((rand() % 2150) / 100.0); 
         
         int year = 2024 + (rand() % 3);
         int month = 1 + (rand() % 12);
