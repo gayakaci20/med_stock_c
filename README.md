@@ -52,3 +52,6 @@ Lancer l'application :
 ```bash
 ./medical_stock_manager
 ```
+## 📜 License  
+
+📝 **MIT License** - Open-source project, free to use and modify.
